@@ -1,0 +1,133 @@
+/* Basisopmaak */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* centreren op de pagina */
+  align-items: center;
+  min-height: 100vh;
+  background: #f7f7f7;
+}
+
+/* Container voor de afbeeldingen */
+body {
+  gap: 2vw; /* ruimte tussen de afbeeldingen */
+}
+
+/* Afbeeldingen styling */
+img {
+  width: 30%; /* elk neemt ongeveer 30% van de breedte */
+  height: auto;
+  object-fit: cover; /* zorgt dat de afbeelding mooi vult zonder vervormen */
+  border-radius: 12px; /* zachte hoekjes */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover-effect voor een subtiele animatie */
+img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsieve aanpassing voor kleine schermen */
+@media (max-width: 800px) {
+  body {
+    flex-direction: column; /* onder elkaar op mobiel */
+  }
+  img {
+    width: 80%;
+  }
+}
+/* ===== Afbeeldingengalerij ===== */
+.image-gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+  flex-wrap: wrap;
+  margin: 5vh auto;
+  max-width: 1200px;
+}
+
+.image-gallery img {
+  width: 40%;
+min-width: 380px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Tekstopmaak ===== */
+.project-text {
+  max-width: 900px;
+  margin: 0 auto 10vh auto;
+  padding: 0 2rem;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  line-height: 1.7;
+}
+
+.project-text h1 {
+  font-size: 2.2rem;
+  color: #4E79FF;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.project-text h2 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  border-left: 5px solid #4E79FF;
+  padding-left: 0.8rem;
+}
+
+.project-text p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.project-text strong {
+  color: #4E79FF;
+}
+/* ===== Terugknop ===== */
+.back-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 2rem 3rem 0;
+}
+
+/* Terugknop linksboven */
+.back-button {
+  position: absolute;
+  top: 2vh;
+  left: 2vw;
+  padding: 0.8em 1.6em;
+  background-color: #4E79FF;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #3458d6;
+  transform: translateY(-2px);
+}
+
+
+.back-button:active {
+  transform: translateY(0);
+}

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perronscherm - Train Departure Display</title>
+    <meta name="description" content="Real-time train departure information display for platform screens">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #fafafa;
+            color: #171717;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #4E79FF;
+            border-bottom: 2px solid #e5e5e5;
+            padding: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+         #header-clock {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    min-width: 6rem;
+    text-align: center;
+ }
+        .header-text h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: white;
+        }
+
+        .header-text p {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: white;
+            margin-top: 0.5rem;
+        }
+       
+@font-face {
+  font-family: "Milker";
+  src: url("fonts/milker.woff2") format("woff2"),
+       url("fonts/milker.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#header-clock {
+  font-family: 'Milker', 'Roboto Mono', monospace;
+}
+
+
+
+        .target-icon {
+            width: 4rem;
+            height: 4rem;
+            border: 4px solid #171717;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .target-icon svg {
+            width: 2rem;
+            height: 2rem;
+            stroke: #171717;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            overflow: auto;
+            padding: 1rem 0;
+        }
+
+        /* Table Styles */
+        .departures-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .departures-table thead {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .departures-table tbody tr {
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .departures-table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .departures-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .departures-table td {
+            padding: 1.5rem 1rem;
+            vertical-align: middle;
+        }
+
+        /* Line Badge */
+        .line-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .train-icon {
+            width: 3rem;
+            height: 3rem;
+            flex-shrink: 0;
+        }
+
+        .line-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            
+            color: #1f2937;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+            white-space: nowrap;
+        }
+
+        /* Destination */
+        .destination-cell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .destination-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+            color: #171717;
+        }
+
+        .via-stations {
+            font-size: 0.875rem;
+            color: #737373;
+            margin-top: 0.25rem;
+        }
+
+        /* Time */
+        .time-cell {
+            text-align: center;
+        }
+
+        .departure-time {
+            font-family: 'Roboto Mono', 'Courier New', monospace;
+            font-size: 2.25rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: #171717;
+        }
+
+        /* Delay */
+        .delay-cell {
+            text-align: center;
+        }
+
+        .delay-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            background-color: #dc2626;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .on-time {
+            color: #737373;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        /* Facilities */
+        .facilities-cell {
+            min-width: 200px;
+        }
+
+        .facilities-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .facility-icon {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            background-color: rgba(23, 23, 23, 0.1);
+        }
+
+        .facility-icon svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke: #171717;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Footer */
+        footer {
+            padding: 1rem 2rem;
+            background-color: rgba(245, 245, 245, 0.3);
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-content p {
+            font-size: 0.875rem;
+            color: #737373;
+        }
+
+        /* Screen reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .header-text h1 {
+                font-size: 2rem;
+            }
+            .header-text p {
+                font-size: 1rem;
+            }
+            .destination-name {
+                font-size: 1.25rem;
+            }
+            .departure-time {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>TITEL</h1>
+                    <p>SUBTITEL</p>
+                    
+                </div>
+               
+<div id="header-clock" aria-label="Current time">00:00:00</div>
+
+                </div>
+            </div>
+        </div>
+        
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <table class="departures-table" aria-label="Train departure schedule">
+                <thead>
+                    <tr>
+                        <th scope="col">Line</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Departure Time</th>
+                        <th scope="col">Delay</th>
+                        <th scope="col">Facilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Departure 1: LC12 to TIELEN, 15:00, +3 delay -->
+                    <tr>
+                        <td>
+                            <div class="line-cell">
+                                <svg class="train-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="16" height="16" x="4" y="3" rx="2"></rect>
+                                    <path d="M4 11h16"></path>
+                                    <path d="M12 3v8"></path>
+                                    <path d="m8 19-2 3"></path>
+                                    <path d="m18 22-2-3"></path>
+                                    <path d="M8 15h0"></path>
+                                    <path d="M16 15h0"></path>
+                                </svg>
+                                <span class="sr-only">Train</span>
+                                <div class="line-badge">LC12</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="destination-cell">
+                                <span class="destination-name">TIELEN</span>
+                            </div>
+                        </td>
+                        <td class="time-cell">
+                            <time class="departure-time">15:00</time>
+                        </td>
+                        <td class="delay-cell">
+                            <div class="delay-badge">+3</div>
+                            <span class="sr-only">3 minutes delayed</span>
+                        </td>
+                        <td class="facilities-cell">
+                            <div class="facilities-icons">
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="4" r="2"></circle>
+                                        <path d="M16 8h-1.5"></path>
+                                        <path d="m14.5 8-1 4"></path>
+                                        <path d="M11 21h2"></path>
+                                        <path d="M12 21v-6"></path>
+                                        <path d="M7 8h1.5l1 4"></path>
+                                        <path d="M8 8h8"></path>
+                                        <path d="M12 15v-2"></path>
+                                    </svg>
+                                    <span class="sr-only">Wheelchair accessible</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="15" cy="5" r="1"></circle>
+                                        <path d="M12 17.5V14l-3-3 4-3 2 3h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Bike storage available</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M2 8h4"></path>
+                                        <path d="M6 8v8"></path>
+                                        <path d="M2 16h4"></path>
+                                        <path d="M14 8h-2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2z"></path>
+                                        <path d="M20 8h2"></path>
+                                        <path d="M22 12h-2"></path>
+                                        <path d="M20 16h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Charging stations available</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Departure 2: LC12 to HERENTALS, 15:08, on time -->
+                    <tr>
+                        <td>
+                            <div class="line-cell">
+                                <svg class="train-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="16" height="16" x="4" y="3" rx="2"></rect>
+                                    <path d="M4 11h16"></path>
+                                    <path d="M12 3v8"></path>
+                                    <path d="m8 19-2 3"></path>
+                                    <path d="m18 22-2-3"></path>
+                                    <path d="M8 15h0"></path>
+                                    <path d="M16 15h0"></path>
+                                </svg>
+                                <span class="sr-only">Train</span>
+                                <div class="line-badge">LC12</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="destination-cell">
+                                <span class="destination-name">HERENTALS</span>
+                            </div>
+                        </td>
+                        <td class="time-cell">
+                            <time class="departure-time">15:08</time>
+                        </td>
+                        <td class="delay-cell">
+                            <div class="on-time">—</div>
+                            <span class="sr-only">On time</span>
+                        </td>
+                        <td class="facilities-cell">
+                            <div class="facilities-icons">
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="4" r="2"></circle>
+                                        <path d="M16 8h-1.5"></path>
+                                        <path d="m14.5 8-1 4"></path>
+                                        <path d="M11 21h2"></path>
+                                        <path d="M12 21v-6"></path>
+                                        <path d="M7 8h1.5l1 4"></path>
+                                        <path d="M8 8h8"></path>
+                                        <path d="M12 15v-2"></path>
+                                    </svg>
+                                    <span class="sr-only">Wheelchair accessible</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="15" cy="5" r="1"></circle>
+                                        <path d="M12 17.5V14l-3-3 4-3 2 3h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Bike storage available</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"></path>
+                                    </svg>
+                                    <span class="sr-only">Quiet zone available</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Departure 3: LC12 to TIELEN via Geel, Mol, 15:30, +6 delay -->
+                    <tr>
+                        <td>
+                            <div class="line-cell">
+                                <svg class="train-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="16" height="16" x="4" y="3" rx="2"></rect>
+                                    <path d="M4 11h16"></path>
+                                    <path d="M12 3v8"></path>
+                                    <path d="m8 19-2 3"></path>
+                                    <path d="m18 22-2-3"></path>
+                                    <path d="M8 15h0"></path>
+                                    <path d="M16 15h0"></path>
+                                </svg>
+                                <span class="sr-only">Train</span>
+                                <div class="line-badge">LC12</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="destination-cell">
+                                <span class="destination-name">TIELEN</span>
+                                <span class="via-stations">via Geel, Mol</span>
+                            </div>
+                        </td>
+                        <td class="time-cell">
+                            <time class="departure-time">15:30</time>
+                        </td>
+                        <td class="delay-cell">
+                            <div class="delay-badge">+6</div>
+                            <span class="sr-only">6 minutes delayed</span>
+                        </td>
+                        <td class="facilities-cell">
+                            <div class="facilities-icons">
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="4" r="2"></circle>
+                                        <path d="M16 8h-1.5"></path>
+                                        <path d="m14.5 8-1 4"></path>
+                                        <path d="M11 21h2"></path>
+                                        <path d="M12 21v-6"></path>
+                                        <path d="M7 8h1.5l1 4"></path>
+                                        <path d="M8 8h8"></path>
+                                        <path d="M12 15v-2"></path>
+                                    </svg>
+                                    <span class="sr-only">Wheelchair accessible</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M2 8h4"></path>
+                                        <path d="M6 8v8"></path>
+                                        <path d="M2 16h4"></path>
+                                        <path d="M14 8h-2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2z"></path>
+                                        <path d="M20 8h2"></path>
+                                        <path d="M22 12h-2"></path>
+                                        <path d="M20 16h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Charging stations available</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+                                        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+                                        <line x1="6" x2="6.01" y1="2" y2="2"></line>
+                                        <line x1="10" x2="10.01" y1="2" y2="2"></line>
+                                        <line x1="14" x2="14.01" y1="2" y2="2"></line>
+                                    </svg>
+                                    <span class="sr-only">Café available</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Departure 4: LC12 to HERENTALS, 15:32, on time -->
+                    <tr>
+                        <td>
+                            <div class="line-cell">
+                                <svg class="train-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="16" height="16" x="4" y="3" rx="2"></rect>
+                                    <path d="M4 11h16"></path>
+                                    <path d="M12 3v8"></path>
+                                    <path d="m8 19-2 3"></path>
+                                    <path d="m18 22-2-3"></path>
+                                    <path d="M8 15h0"></path>
+                                    <path d="M16 15h0"></path>
+                                </svg>
+                                <span class="sr-only">Train</span>
+                                <div class="line-badge">LC12</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="destination-cell">
+                                <span class="destination-name">HERENTALS</span>
+                            </div>
+                        </td>
+                        <td class="time-cell">
+                            <time class="departure-time">15:32</time>
+                        </td>
+                        <td class="delay-cell">
+                            <div class="on-time">—</div>
+                            <span class="sr-only">On time</span>
+                        </td>
+                        <td class="facilities-cell">
+                            <div class="facilities-icons">
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="4" r="2"></circle>
+                                        <path d="M16 8h-1.5"></path>
+                                        <path d="m14.5 8-1 4"></path>
+                                        <path d="M11 21h2"></path>
+                                        <path d="M12 21v-6"></path>
+                                        <path d="M7 8h1.5l1 4"></path>
+                                        <path d="M8 8h8"></path>
+                                        <path d="M12 15v-2"></path>
+                                    </svg>
+                                    <span class="sr-only">Wheelchair accessible</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="15" cy="5" r="1"></circle>
+                                        <path d="M12 17.5V14l-3-3 4-3 2 3h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Bike storage available</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Departure 5: LC12 to TIELEN, 15:43, +2 delay -->
+                    <tr>
+                        <td>
+                            <div class="line-cell">
+                                <svg class="train-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="16" height="16" x="4" y="3" rx="2"></rect>
+                                    <path d="M4 11h16"></path>
+                                    <path d="M12 3v8"></path>
+                                    <path d="m8 19-2 3"></path>
+                                    <path d="m18 22-2-3"></path>
+                                    <path d="M8 15h0"></path>
+                                    <path d="M16 15h0"></path>
+                                </svg>
+                                <span class="sr-only">Train</span>
+                                <div class="line-badge">LC12</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="destination-cell">
+                                <span class="destination-name">TIELEN</span>
+                            </div>
+                        </td>
+                        <td class="time-cell">
+                            <time class="departure-time">15:43</time>
+                        </td>
+                        <td class="delay-cell">
+                            <div class="delay-badge">+2</div>
+                            <span class="sr-only">2 minutes delayed</span>
+                        </td>
+                        <td class="facilities-cell">
+                            <div class="facilities-icons">
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="4" r="2"></circle>
+                                        <path d="M16 8h-1.5"></path>
+                                        <path d="m14.5 8-1 4"></path>
+                                        <path d="M11 21h2"></path>
+                                        <path d="M12 21v-6"></path>
+                                        <path d="M7 8h1.5l1 4"></path>
+                                        <path d="M8 8h8"></path>
+                                        <path d="M12 15v-2"></path>
+                                    </svg>
+                                    <span class="sr-only">Wheelchair accessible</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                                        <circle cx="15" cy="5" r="1"></circle>
+                                        <path d="M12 17.5V14l-3-3 4-3 2 3h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Bike storage available</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"></path>
+                                    </svg>
+                                    <span class="sr-only">Quiet zone available</span>
+                                </div>
+                                <div class="facility-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M2 8h4"></path>
+                                        <path d="M6 8v8"></path>
+                                        <path d="M2 16h4"></path>
+                                        <path d="M14 8h-2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2z"></path>
+                                        <path d="M20 8h2"></path>
+                                        <path d="M22 12h-2"></path>
+                                        <path d="M20 16h2"></path>
+                                    </svg>
+                                    <span class="sr-only">Charging stations available</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p id="last-update">Last updated: <span id="current-time"></span></p>
+                <p>Platform information display</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function updateHeaderClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const clockEl = document.getElementById('header-clock');
+            if(clockEl) {
+                clockEl.textContent = `${hours}:${minutes}:${seconds}`;
+            }
+        }
+
+        updateHeaderClock();
+        setInterval(updateHeaderClock, 1000);
+    });
+</script>
+
+</body>
+</html>

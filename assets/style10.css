@@ -1,0 +1,145 @@
+/* Algemene styling */
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+/* Week container */
+.week {
+  max-width: 900px;
+  margin: 60px auto;
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Titel */
+.week-10 h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #1a4fdc;
+}
+
+/* Accent-lijntje onder titel */
+.week-10 h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #1a4fdc;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+/* Paragrafen */
+.week-10 p {
+  margin-bottom: 18px;
+  line-height: 1.65;
+  font-size: 17px;
+}
+
+/* Sterke tekst */
+.week-10 strong {
+  color: #1a4fdc;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .week {
+    padding: 30px 25px;
+    margin: 30px 15px;
+  }
+
+  .week-10 h2 {
+    font-size: 26px;
+  }
+
+  .week-10 p {
+    font-size: 16px;
+  }
+}
+/* ---------------------------------------------------
+   TERUGKNOP
+----------------------------------------------------*/
+.back-button-container {
+  padding: 25px;
+}
+
+.back-button {
+  background: #1a4fdc;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(26, 79, 220, 0.25);
+}
+
+.back-button:hover {
+  background: #153eac;
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------
+   ALGEMENE KNOPPEN
+----------------------------------------------------*/
+.button {
+  display: inline-block;
+  background-color: #1a4fdc;
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background 0.25s ease, transform 0.15s ease;
+  box-shadow: 0 5px 15px rgba(26, 79, 220, 0.28);
+}
+
+.button:hover {
+  background-color: #153eac;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------
+   LINKS
+----------------------------------------------------*/
+a {
+  color: #1a4fdc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: #153eac;
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------
+   KNOP IN EEN TEKSTSECTIE (zoals Week 9)
+----------------------------------------------------*/
+.week-10 .button {
+  margin-top: 15px;
+}
+

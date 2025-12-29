@@ -1,0 +1,85 @@
+/* ===== Basisopmaak ===== */
+body {
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+
+/* ===== Terugknop ===== */
+.back-button {
+  position: absolute;
+  top: 2vh;
+  left: 2vw;
+  padding: 0.8em 1.6em;
+  background-color: #4E79FF;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #3458d6;
+  transform: translateY(-2px);
+}
+
+/* ===== Tekstgedeelte ===== */
+.project-text {
+  max-width: 900px;
+  margin: 12vh auto 8vh auto;
+  padding: 0 2rem;
+  line-height: 1.7;
+}
+
+.project-text h1 {
+  font-size: 2.4rem;
+  color: #4E79FF;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.project-text p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+
+/* ===== Afbeeldingengalerij ===== */
+.image-gallery {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3vw;
+  flex-wrap: nowrap;
+  margin: 5vh auto;
+  max-width: 90vw;
+}
+
+.image-gallery img {
+  width: 28vw;
+  height: 38vh;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== Responsieve layout ===== */
+@media (max-width: 900px) {
+  .image-gallery {
+    flex-wrap: wrap;
+  }
+
+  .image-gallery img {
+    width: 80%;
+    height: auto;
+    margin-bottom: 2vh;
+  }
+}

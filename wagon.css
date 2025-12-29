@@ -1,0 +1,352 @@
+/* ===== Basis layout ===== */
+body {
+  font-family: 'Milker', 'Poppins', sans-serif;
+  background: #f7f7f7;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+.screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4E79FF;
+  color: white;
+  padding: 0 3vw;
+  height: 12vh;
+  box-sizing: border-box;
+}
+
+.logo {
+  width: 5vh;
+  height: 5vh;
+  background: white;
+  border-radius: 999px;
+  margin-right: 1vw;
+}
+
+.title-wrap h1 {
+  font-size: 3.2vh;
+  margin: 0;
+}
+
+.title-wrap h2 {
+  font-size: 1.4vh;
+  margin: 0;
+}
+
+.clock {
+  font-size: 3vh;
+  font-weight: 700;
+}
+
+/* ===== Inhoud wagonscherm ===== */
+.wagon-content {
+  flex: 1;
+  display: flex;
+  align-items: center; /* verticaal centreren */
+  justify-content: center;
+  padding: 2vh 4vw;
+  box-sizing: border-box;
+}
+
+/* Container voor trein + wagons */
+.train-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* ===== Linkerzijde: treininfo ===== */
+.train-info {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+/* Treinicoon links */
+.train-icon {
+  width: 10vh;
+  height: auto;
+  margin-top: -6vh;
+}
+
+/* Tekstdeel rechts van het icoon */
+.train-text {
+  display: flex;
+  align-items: baseline; /* lijnt teksten mooi uit */
+  gap: 1vw;
+}
+
+.destination {
+  font-size: 4.5vh;
+  font-weight: 700;
+  margin: 0;
+}
+
+.time {
+  font-size: 4vh;
+  font-weight: 600;
+  color: #000;
+}
+
+.delay {
+  font-size: 3vh;
+  font-weight: 700;
+  color: #D30000;
+}
+
+.train-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 2.5vh;
+  margin-left: 1vw;
+}
+.train-text {
+  display: flex;
+  align-items: baseline; /* lijnt de tekst mooi uit */
+  gap: 3vw; /* vergrootte ruimte tussen treinnummer, bestemming, tijd en vertraging */
+}
+
+
+.train-details .delay {
+  color: #D30000;
+  font-weight: 700;
+  margin-left: 0.4vw;
+}
+
+/* ===== Rechterzijde: wagons ===== */
+/* ===== Wagons ===== */
+/* ===== Wagons ===== */
+/* ===== Wagons ===== */
+.wagon-track {
+  display: flex;
+  align-items: flex-start; /* zodat nummers onderaan goed uitlijnen */
+  justify-content: center;
+  gap: 4vw;
+  flex-wrap: nowrap;
+  margin-top: 6vh;
+  position: relative; /* nodig voor de spoorlijn */
+  padding-bottom: 4vh; /* ruimte voor nummers onderaan */
+}
+
+/* Lijntje onder de wagons (spoor) */
+
+
+/* Elke wagon */
+.wagon {
+  position: relative;
+  background: #fff;
+  border: 0.5vh solid #000;
+  border-radius: 1.5vh;
+  width: 15vw;
+height: 15vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  z-index: 1; /* boven spoorlijn */
+  font-family: 'Milker', sans-serif; /* hier het font Milker */
+}
+
+.wagon:hover {
+  transform: translateY(-0.5vh);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Pictogrammen in wagon */
+.wagon-icons {
+  display: flex;
+  gap: 1vw;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.icon {
+  width: 3.5vh;
+  height: 3.5vh;
+  object-fit: contain;
+}
+
+/* Wagonnummer ONDER de wagon */
+/* Lijntje onder de wagons, boven de labels */
+/* ===== Spoorlijn met bewegende pijltjes ===== */
+/* ===== Gewone spoorlijn onder de wagons ===== */
+.wagon-track::after {
+  content: "";
+  position: absolute;
+  bottom: 2vh;      /* onder de wagons, boven de labels */
+  left: 0;          /* start bij de eerste wagon */
+  right: 0;         /* eindigt bij de laatste wagon */
+  height: 0.4vh;    /* dikte van de spoorlijn */
+  background: #000; /* kleur van de spoorlijn */
+  border-radius: 1vh;
+  z-index: 0;
+}
+
+
+/* ===== Animatie ===== */
+@keyframes moveArrows {
+  0% {
+    transform: translateX(-3vw);
+  }
+  100% {
+    transform: translateX(3vw);
+  }
+}
+
+
+/* Wagon-labels onder de wagons */
+
+
+.wagon:hover {
+  transform: translateY(-0.5vh);
+}
+
+/* ===== Icons ===== */
+.icon {
+  width: 10vh;
+  height: 10vh;
+  object-fit: contain;
+}
+
+.main-icon {
+  width: 6vh;
+  height: 6vh;
+}
+
+.wagon-icons {
+  display: flex;
+  gap: 1vw;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Wagonnummer onder de spoorlijn */
+.wagon-label {
+  position: absolute;
+ bottom: -10vh;
+left: 50%;
+transform: translateX(-50%);
+font-size: 3vh;
+  font-weight: 700;
+  color: #000;
+  z-index: 1; /* boven het spoor */
+  background: transparent;
+}
+
+
+/* ===== Extra details ===== */
+.hint {
+  position: absolute;
+  bottom: 2vh;
+  width: 100%;
+  text-align: center;
+  font-size: 1.6vh;
+  color: #666;
+}
+/* ===== Lijntje met vlaggen onder bestemming ===== */
+.train-line-flags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  margin-top: 2vh; /* ruimte onder de bestemmingsregel */
+  width: 100%;
+}
+.train-line-flags .flag {
+  width: 6vh;       /* iets groter dan voorheen */
+  height: auto;
+  transform: translateY(-2vh); /* omhoog zetten */
+}
+
+
+.train-line-flags {
+  display: flex;
+  flex-direction: column; /* lijn boven labels */
+  align-items: center;
+  width: 100%;
+  gap: 1vh; /* ruimte tussen lijn en labels */
+  position: relative;
+}
+
+/* Container voor vlaggen en lijn */
+.flags-line-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* vlag links en rechts */
+  width: 100%;
+  padding: 0 5%; /* lijn begint en eindigt iets binnen de vlaggen */
+}
+
+/* Zwarte lijn tussen vlaggen */
+.flags-line-container .line {
+  position: relative;
+  height: 0.4vh;
+  background: #000;
+  border-radius: 1vh;
+  flex: 1;
+  margin: 0 1vw; /* ruimte tussen lijn en vlaggen */
+  z-index: 0;
+}
+
+/* Station labels onder de lijn */
+.station-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 5%;
+  font-size: 1.8vh;
+  font-weight: 600;
+  color: #000;
+  font-family: 'Milker', sans-serif;
+}
+
+
+
+/* 3 pijltjes exact in het midden, zelfde kleur als lijn */
+.train-line-flags .line::before {
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* perfect centreren */
+  font-size: 2.2vh;
+  color: #000; /* exact zelfde kleur als de lijn */
+  opacity: 1; /* geen transparantie */
+  letter-spacing: 1vw; /* afstand tussen de pijlen */
+  line-height: 1; /* voorkomt verticale verschuiving */
+}
+
+
+
+
+
+.flag {
+  width: 5%;
+  height: auto;
+}
+.train-number {
+  font-size: 3.5vh;
+  font-weight: 600;
+  color: #000;
+  opacity: 0.66;  /* 66% zichtbaarheid */
+  margin-right: 1vw; /* kleine ruimte naar de bestemming */
+}
+
+/* Container voor de station labels */
+

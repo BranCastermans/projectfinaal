@@ -1,0 +1,122 @@
+/* ===========================
+   style5.css — Week 5 Perronscherm
+   =========================== */
+
+/* ===== Algemene opmaak ===== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f7f7;
+  color: #222;
+  line-height: 1.8;
+}
+
+/* ===== Terugknop ===== */
+.back-button-container {
+  position: relative;
+  width: 100%;
+}
+
+.back-button {
+  position: absolute;
+  top: 2vh;
+  left: 2vw;
+  padding: 0.8em 1.6em;
+  background-color: #4E79FF;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #3458d6;
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+/* ===== Tekstopmaak ===== */
+.project-text {
+  max-width: 850px;
+  margin: 10vh auto 5vh auto;
+  padding: 0 2rem;
+  text-align: justify;
+}
+
+.project-text h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #4E79FF;
+  margin-bottom: 2rem;
+}
+
+.project-text p {
+  margin-bottom: 1.4rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.project-text strong {
+  color: #4E79FF;
+}
+
+.project-text em {
+  font-style: italic;
+}
+
+/* ===== Projectlink ===== */
+.project-link {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10vh;
+  list-style: none;
+  padding: 0;
+}
+
+.project-link li a {
+  background-color: #4E79FF;
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.project-link li a:hover {
+  background-color: #3458d6;
+  transform: translateY(-2px);
+}
+
+.project-link li a:active {
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .project-text {
+    padding: 0 1rem;
+  }
+
+  .project-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .back-button {
+    padding: 0.6em 1.2em;
+    font-size: 0.9rem;
+  }
+
+  .project-link li a {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wagonscherm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="wagon.css" />
+</head>
+<body>
+  <div class="screen">
+    <!-- Bestaande header -->
+    <header class="screen-header">
+      <div class="header-left">
+        <div class="logo"></div>
+        <div class="title-wrap">
+          <h1>TITEL</h1>
+          <h2>SUBTITEL</h2>
+        </div>
+      </div>
+      <div class="clock">14:59:12</div>
+    </header>
+
+    <!-- Inhoud wagonscherm -->
+    <main class="wagon-content">
+  <div class="train-line">
+   <div class="train-info">
+  <img src="wagon.img/trein.png" alt="Trein" class="train-icon" />
+  <div class="train-text">
+     <span class="train-number">IC 1234</span>
+    <h3 class="destination">TIELEN</h3>
+    <span class="time">15:00</span>
+    <span class="delay">+3</span>
+  </div>
+</div>
+
+<!-- Nieuwe lijn met vlaggen -->
+<div class="train-line-flags">
+  <!-- Container voor vlaggen + lijn -->
+  <div class="flags-line-container">
+    <img src="wagon.img/vlag.png" alt="Vlag links" class="flag left-flag">
+    <div class="line"></div>
+    <img src="wagon.img/zwartevlag.png" alt="Vlag rechts" class="flag right-flag">
+  </div>
+
+  <!-- Labels voor begin en eindstation -->
+  <div class="station-labels">
+    <span class="start-station">ANTWERPEN</span>
+    <span class="end-station">TIELEN</span>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="wagon-track">
+      <div class="wagon">
+        <div class="wagon-icons">
+          <img src="wagon.img/rolstoel.png" alt="Rolstoel" class="icon" />
+        </div>
+        <h3><span class="wagon-label">WAGON 1</span></h3>
+      </div>
+
+      <div class="wagon">
+        <div class="wagon-icons">
+          <img src="wagon.img/oplader.png" alt="Oplader" class="icon" />
+        </div>
+        <span class="wagon-label">WAGON 2</span>
+      </div>
+
+      <div class="wagon">
+        <div class="wagon-icons">
+          <img src="wagon.img/toilet.png" alt="Vlag" class="icon" />
+        </div>
+        <span class="wagon-label">WAGON 3</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+  </div>
+
+  <script>
+    // Live klok
+    (function startClock() {
+      const clockEl = document.querySelector('.clock');
+      if (!clockEl) return;
+      function pad(n){return n.toString().padStart(2,'0');}
+      function update(){
+        const now = new Date();
+        clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      }
+      update(); setInterval(update, 1000);
+    })();
+  </script>
+</body>
+</html>

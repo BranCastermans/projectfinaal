@@ -1,0 +1,231 @@
+/* Font setup */
+body {
+  font-family: 'Milker', 'Poppins', sans-serif;
+  background-color: #d9d9d9;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  /* top padding removed in favor of margin on .screen to make spacing visible */
+  /* padding-top: 24px; */
+}
+
+/* Layout */
+.screen {
+  /* full viewport layout that scales */
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+/* Header */
+.screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4E79FF;
+  color: white;
+  padding: 0 3vw;
+  height: 12vh; /* header scales with viewport height */
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 5vh;
+  height: 5vh;
+  background: white;
+  border-radius: 999px;
+  margin-right: 1.2vw;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.title-wrap h1 {
+  color: white;
+  font-size: 3.2vh; /* scale with viewport */
+  margin: 0;
+  font-weight: 700;
+}
+
+.title-wrap h2 {
+  color: white;
+  font-size: 1.4vh; /* smaller subtitle scaled */
+  margin: 0;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.screen-header h1 {
+  font-size: 2.0rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.screen-header h2 {
+  margin: -10px 0 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.screen-header h2 span {
+  font-weight: 400;
+  margin-left: 6px;
+  opacity: 0.8;
+}
+
+.clock {
+  font-size: 3vh;
+  font-weight: 700;
+}
+
+/* Table */
+.content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.6vh 3vw;
+  box-sizing: border-box;
+}
+
+.train-table-wrapper {
+  flex: 1 1 auto;
+  width: 100%;
+  overflow-y: auto; /* scroll hier */
+  background: white;
+  border-radius: 0px;
+}
+
+.train-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed; /* behoud kolombreedtes */
+}
+
+.train-table thead {
+  background: #4E79FF;
+  color: white;
+  font-size: 1.8vh;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.train-table th,
+.train-table td {
+  padding: 1.6vh 2vw;
+  font-size: 3.5vh;
+  word-wrap: break-word;
+  text-align: left;
+}
+
+.train-table tbody tr {
+  border-bottom: 2px solid #ddd;
+  background: white;
+}
+
+.train-table tbody tr:nth-child(even) {
+  background: #f0f0f0;
+}
+
+.train {
+  font-weight: 700;
+  opacity: 0.66;
+  padding-right: 8px;
+  position: relative;
+}
+
+.train::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  right: 4px;
+  width: 2px;
+  background: rgba(0,0,0,0.14);
+}
+
+.destination {
+  font-weight: 700;
+}
+
+.time {
+  font-weight: 700;
+  text-align: right;
+}
+
+.delay-amount {
+  color: #D30000;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.platform {
+  text-align: right;
+  font-weight: 600;
+  color: #7B778F;
+}
+
+
+.train {
+  font-weight: 700;
+  opacity: 0.66;
+  padding-right: 8px; /* space before the divider */
+  position: relative;
+  border-right: none; /* replaced by pseudo-element */
+}
+
+.train::after {
+  content: '';
+  position: absolute;
+  top: 12px; /* gap from top */
+  bottom: 12px; /* gap from bottom */
+  right: 4px; /* move closer to the train number */
+  width: 2px; /* make the line slightly thicker */
+  background: rgba(0,0,0,0.14);
+}
+
+.destination {
+  font-weight: 700;
+}
+
+.time {
+  font-weight: 700;
+  text-align: right;
+}
+
+.delay-amount {
+  color: #D30000;
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.platform {
+  text-align: right;
+  font-weight: 600;
+  color: #7B778F; /* platform number color */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .screen-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .clock {
+    margin-top: 8px;
+  }
+  .train-table th:nth-child(4),
+  .train-table td:nth-child(4) {
+    display: none;
+  }
+}

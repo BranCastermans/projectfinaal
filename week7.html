@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 7 — Tailwind CSS</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* =========================
+       RESET & BASIS
+    ========================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+        font-family: 'Space Grotesk', sans-serif;
+        color: #ffffff;
+        line-height: 1.6;
+        background: #050505;
+        overflow-x: hidden;
+        position: relative;
+    }
+.site-footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* horizontaal centreren */
+    justify-content: center; /* verticaal centreren als nodig */
+    border-top: 1px solid rgba(255,255,255,0.1);
+    opacity: 0.85;
+    text-align: center; /* fallback */
+}
+
+.footer-name {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.05em;
+}
+
+.footer-link a {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link a:hover {
+    color: #ffffff;
+}
+    /* =========================
+       GRADIENT ACHTERGROND
+    ========================= */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(60% 60% at 20% 30%, rgba(26,79,220,0.85), transparent 60%),
+            radial-gradient(50% 50% at 80% 60%, rgba(255,120,70,0.8), transparent 65%),
+            radial-gradient(70% 70% at 50% 85%, rgba(0,0,0,0.95), transparent 70%);
+        z-index: -2;
+    }
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+            radial-gradient(70% 70% at 30% 40%, rgba(26,79,220,1), transparent 60%),
+            radial-gradient(60% 60% at 70% 55%, rgba(255,160,100,0.9), transparent 65%),
+            radial-gradient(80% 80% at 50% 85%, rgba(0,0,0,0.98), transparent 75%);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 1.5s ease;
+    }
+
+    body:hover::after { opacity: 1; }
+
+    /* =========================
+       CONTAINER
+    ========================= */
+    .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; position: relative; z-index: 1; }
+
+    /* =========================
+       TERUGKNOP
+    ========================= */
+    .back-button-container { padding: 1.5rem 0; text-align: center; }
+    .back-button {
+        background: rgba(26,79,220,0.25);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+    .back-button:hover { background: rgba(26,79,220,0.5); }
+.site-nav ul { list-style: none; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; padding-bottom: 2rem; }
+    .site-nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        transition: all 0.35s ease;
+        background: rgba(26,79,220,0.15);
+    }
+    /* =========================
+       PROJECT TEKST
+    ========================= */
+    .project-text { max-width: 800px; margin: 0 auto 3rem; }
+    .project-text h1 { font-size: clamp(2rem,5vw,3rem); font-weight: 600; margin-bottom: 1.5rem; text-align: center; }
+    .project-text p { margin-bottom: 1rem; opacity: 0.85; }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width: 600px) {
+        .project-text h1 { font-size: 2rem; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='index.html'">← Terug naar start</button>
+    </div>
+<nav class="site-nav">
+    <ul>
+        <li><a href="week1.html">Week 1</a></li>
+        <li><a href="week2.html">Week 2</a></li>
+        <li><a href="week3.html">Week 3</a></li>
+        <li><a href="week4.html">Week 4</a></li>
+        <li><a href="week5.html">Week 5</a></li>
+        <li><a href="week6.html">Week 6</a></li>
+        <li><a href="week7.html">Week 7</a></li>
+        <li><a href="week8.html">Week 8</a></li>
+        <li><a href="week9.html">Week 9</a></li>
+        <li><a href="week10.html">Week 10</a></li>
+        <li><a href="week11.html">Week 11</a></li>
+        <li><a href="week12.html">Week 12</a></li>
+        <li><a href="week13.html">Week 13</a></li>
+    </ul>
+</nav>
+    <section class="project-text">
+        <h1>Week 7 — Tailwind CSS</h1>
+
+        <p>
+          Tijdens deze week leerden we werken met <strong>Tailwind CSS</strong>, een utility-first CSS framework waarmee je heel snel 
+          en efficiënt interfaces kunt opbouwen. In plaats van zelf uitgebreide CSS-bestanden te schrijven, werk je rechtstreeks
+          met kleine, betekenisvolle klassen in de HTML. In het begin was het even wennen, maar al snel merkte ik hoe flexibel en
+          krachtig het systeem is.
+        </p>
+
+        <p>
+          Tijdens de oefeningen experimenteerden we met <strong>spacing, kleuren, typografie en responsive gedrag</strong>. Door het gebruik van
+          classes zoals <em>p-4, mt-6, grid, flex, text-blue-600</em> en <em>rounded-xl</em> kon je heel makkelijk en snel een lay-out maken zonder
+          steeds terug naar een stylesheet te moeten gaan. Dit zorgde ervoor dat ik een veel beter inzicht kreeg in hoe Tailwind
+          onder de motorkap werkt.
+        </p>
+
+        <p>
+          Ook bekeken we hoe je met Tailwind een consistente huisstijl kunt aanhouden door eigen kleuren, componenten en varianten
+          te definiëren. Dit gaf me een duidelijk beeld van hoe bedrijven Tailwind gebruiken om <strong>moderne, schaalbare en goed
+          georganiseerde designsystemen</strong> te bouwen.
+        </p>
+
+        <p>
+          Over het algemeen vond ik deze week zeer leerzaam. Tailwind voelt als een compleet andere manier van ontwerpen, maar
+          doordat alles zo snel en intuïtief is, kan je er in korte tijd heel veel mee bereiken. Het is een skill die ik zeker 
+          vaker wil toepassen in toekomstige projecten.
+        </p>
+    </section>
+
+</div>
+ <footer class="site-footer">
+    <p class="footer-name">Castermans Bran — 1GDM1</p>
+    <p class="footer-link">
+        <a href="https://jouwlinkhier.nl" target="_blank">github</a>
+    </p>
+</footer>
+</body>
+</html>
